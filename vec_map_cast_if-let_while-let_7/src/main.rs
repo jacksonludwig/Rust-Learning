@@ -33,6 +33,24 @@ fn main() {
     if let Some(i) = s {
         println!("{}", i);
     }
+
+    let mut s2 = Some(2);
+    while let Some(i) = s2 {
+        if i > 19 {
+            println!("Quit");
+            s2 = None;
+        } else {
+            println!("{}", i);
+            s2 = Some(i + 2);
+        }
+    }
+
+    use std::fs::File;
+    let f = File::open("test.txt");
+    let f = match f {
+        Ok(file) => file,
+        Err(error) => panic!("File not found: {:?}", error),
+    };
 }
 
 #[derive(Debug)]
