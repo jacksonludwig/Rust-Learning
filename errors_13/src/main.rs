@@ -33,4 +33,10 @@ fn main() {
     };
 
     let f2 = File::open("text.txt").unwrap();
+
+    if let Ok(f) = read_file() {
+        println!("read the file!");
+    } else {
+        println!("Errored");
+    }
 }
