@@ -1,23 +1,35 @@
-use iced::{button, Align, Button, Column, Element, Sandbox, Settings, Text};
+use iced::{button, Align, Button, Element, Row, Sandbox, Settings, Text};
 
 pub fn main() {
-    Counter::run(Settings::default())
+    App::run(Settings::default())
 }
 
 #[derive(Default)]
-struct Counter {
-    value: i32,
-    increment_button: button::State,
-    decrement_button: button::State,
+struct App {
+    host_button: button::State,
+    client_button: button::State,
+    menu: Menu,
 }
 
 #[derive(Debug, Clone, Copy)]
 enum Message {
-    IncrementPressed,
-    DecrementPressed,
+    HostPressed,
+    ClientPressed,
 }
 
-impl Sandbox for Counter {
+enum Menu {
+    Main,
+    Host,
+    Client,
+}
+
+impl Default for Menu {
+    fn default() -> Self {
+        Menu::Main
+    }
+}
+
+impl Sandbox for App {
     type Message = Message;
 
     fn new() -> Self {
@@ -25,33 +37,44 @@ impl Sandbox for Counter {
     }
 
     fn title(&self) -> String {
-        String::from("Counter - Iced")
+        String::from("Test - Iced")
     }
 
     fn update(&mut self, message: Message) {
         match message {
-            Message::IncrementPressed => {
-                self.value += 1;
+            Message::HostPressed => {
+                self.menu = Menu::Host;
             }
-            Message::DecrementPressed => {
-                self.value -= 1;
+            Message::ClientPressed => {
+                self.menu = Menu::Client;
             }
         }
     }
 
     fn view(&mut self) -> Element<Message> {
-        Column::new()
-            .padding(20)
-            .align_items(Align::Center)
-            .push(
-                Button::new(&mut self.increment_button, Text::new("Increment"))
-                    .on_press(Message::IncrementPressed),
-            )
-            .push(Text::new(self.value.to_string()).size(50))
-            .push(
-                Button::new(&mut self.decrement_button, Text::new("Decrement"))
-                    .on_press(Message::DecrementPressed),
-            )
-            .into()
+        match self.menu {
+            Menu::Client => Row::new()
+                .padding(20)
+                .align_items(Align::Center)
+                .push(Text::new("client menu placeholder".to_string()).size(50))
+                .into(),
+            Menu::Host => Row::new()
+                .padding(20)
+                .align_items(Align::Center)
+                .push(Text::new("host menu placeholder".to_string()).size(50))
+                .into(),
+            Menu::Main => Row::new()
+                .padding(20)
+                .align_items(Align::Center)
+                .push(
+                    Button::new(&mut self.host_button, Text::new("Host"))
+                        .on_press(Message::HostPressed),
+                )
+                .push(
+                    Button::new(&mut self.client_button, Text::new("Client"))
+                        .on_press(Message::ClientPressed),
+                )
+                .into(),
+        }
     }
 }
