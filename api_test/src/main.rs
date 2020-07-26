@@ -2,7 +2,7 @@ use reqwest;
 use std::sync::mpsc;
 use std::thread;
 
-const LINK: &str = "http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=06f6e2fd036e17bacd53d4a9a658812e";
+const LINK: &str = "";
 
 // This could be equivalent to the number of requests desired
 const NUM_THREADS: usize = 10;
