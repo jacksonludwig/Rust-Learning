@@ -1,3 +1,4 @@
+use std::io;
 enum List {
     Cons(i32, Box<List>),
     End,
@@ -66,4 +67,7 @@ fn main() {
         .filter(|&n| n % 2 == 0)
         .fold(0, |s, i| s + i);
     println!("{}", s);
+
+    println!("test")
 }
+
