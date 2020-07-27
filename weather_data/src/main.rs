@@ -3,6 +3,8 @@ use std::sync::mpsc;
 use std::sync::{Arc, Mutex};
 use std::thread;
 
+mod json;
+
 const LINK: &str = "";
 
 // This could be equivalent to the number of requests desired
@@ -17,18 +19,17 @@ fn main() {
         let inner_request_count = Arc::clone(&request_count);
         thread::spawn(move || {
             let mut count = inner_request_count.lock().unwrap();
-            inner_tx
-                .send(reqwest::blocking::get("https://google.com").unwrap())
-                .unwrap();
+            inner_tx.send("placeholder").unwrap();
             *count += 1;
         });
     }
 
     for _ in 0..NUM_THREADS {
-        println!("Got: {}", rx.recv().unwrap().text().unwrap());
+        println!("Got: {}", rx.recv().unwrap());
     }
     println!(
-        "Google was pinged: {} times",
+        "thread::spawn was run: {} times",
         *request_count.lock().unwrap()
     );
+    println!("{}", json::read_token());
 }

@@ -1,5 +1,5 @@
 [package]
-name = "api_test"
+name = "weather_data"
 version = "0.1.0"
 authors = ["Jackson Ludwig <jacksonludwig0@gmail.com>"]
 edition = "2018"
@@ -8,3 +8,4 @@ edition = "2018"
 
 [dependencies]
 reqwest = { version = "0.10.7", features = ["blocking"] }
+serde_json = "1.0.57"
