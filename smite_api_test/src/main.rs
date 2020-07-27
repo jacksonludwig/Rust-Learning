@@ -1,6 +1,5 @@
-use chrono::{DateTime, Utc};
 mod json;
 
 fn main() {
-    json::create_session();
+    json::fetch_json(&json::create_link("createsession"));
 }
